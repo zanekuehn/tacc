@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import StudentsList from './StudentsList';
 import Accomodations from './Accomodations';
 import StudentsService from '../Services/students-service';
+import { Accordion, Icon } from 'semantic-ui-react';
 
 class StudentPage extends Component {
 	state = {
@@ -34,19 +35,18 @@ class StudentPage extends Component {
 		],
 		oneStudentAccom: [],
 		toggleStudentForm: false,
-		toggleAccomodationForm: false
+		toggleAccomodationForm: false,
+		activeIndex: 0
 	};
 
-	singleStudentsAccomodations = (id) => {
-		const accomodations = this.state.accomodations;
-		const newArray = [];
+	handleClick = (e, titleProps) => {
+		const { index, id } = titleProps;
+		const { activeIndex } = this.state;
+		const newIndex = activeIndex === index ? -1 : index;
 
-		for (let i in accomodations) {
-			if (id == accomodations[i].accom_id) {
-				newArray.push(accomodations[i]);
-				this.setState({ oneStudentAccom: newArray });
-			}
-		}
+		this.grabStudentsAccoms(id);
+
+		this.setState({ activeIndex: newIndex });
 	};
 
 	toggleNewStudent = () => {
@@ -110,6 +110,7 @@ class StudentPage extends Component {
 	};
 
 	grabStudentsAccoms = (id) => {
+		console.log('ran');
 		StudentsService.getAccomodations(id).then((res) => {
 			this.setState({
 				oneStudentAccom: res
@@ -124,6 +125,8 @@ class StudentPage extends Component {
 	}
 
 	render() {
+		const { activeIndex } = this.state;
+
 		const studentform = (
 			<form onSubmit={this.submitNewStudent}>
 				<label>Student Name:</label>
@@ -143,19 +146,38 @@ class StudentPage extends Component {
 			</form>
 		);
 		return (
-			<section className='student-page-container'>
+			<Accordion className='student-page-container'>
 				{this.state.students.map((student, index) => (
-					<StudentsList
-						name={student.name}
-						grade={student.grade}
+					<Accordion.Title
+						active={activeIndex === 0}
+						index={0}
 						id={student.id}
-						key={index}
-						studentsAccoms={() =>
-							this.singleStudentsAccomodations(student.id)
-						}
-						grabAccoms={() => this.grabStudentsAccoms(student.id)}
-					/>
+						onClick={this.handleClick}>
+						<Icon name='dropdown' />
+						Name:{student.name} Grade:{student.grade}
+					</Accordion.Title>
 				))}
+
+				{this.state.oneStudentAccom.map((accom, index) => (
+					<Accordion.Content active={activeIndex === 0}>
+						<p>{accom.accomdation}</p>
+						<p>accom.description</p>
+					</Accordion.Content>
+				))}
+
+				{/* <StudentsList
+					grabAccoms={this.grabStudentsAccoms}
+					students={this.state.students}
+				/> */}
+
+				{/* {this.state.oneStudentAccom.map((accom, index) => (
+					<Accomodations
+						name={accom.accomdation}
+						description={accom.description}
+						key={index}
+					/>
+				))} */}
+
 				{this.state.toggleStudentForm ? (
 					studentform
 				) : (
@@ -170,15 +192,7 @@ class StudentPage extends Component {
 						Add Accomodation
 					</button>
 				)}
-
-				{this.state.oneStudentAccom.map((accom, index) => (
-					<Accomodations
-						name={accom.accomdation}
-						description={accom.description}
-						key={index}
-					/>
-				))}
-			</section>
+			</Accordion>
 		);
 	}
 }
