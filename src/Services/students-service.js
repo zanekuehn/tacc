@@ -21,6 +21,13 @@ const StudentsService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+
+	deleteStudent(id) {
+		return fetch(`${config.API_ENDPOINT}students/${id}`, {
+			method: 'DELETE',
+			headers: { 'content-type': 'application/json' }
+		});
+	},
 	addAccomodation(accomdation, description, id) {
 		return fetch(`${config.API_ENDPOINT}students/${id}`, {
 			method: 'POST',

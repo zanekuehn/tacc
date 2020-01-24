@@ -105,6 +105,16 @@ class StudentPage extends Component {
 		});
 	};
 
+	removeStudent = (id) => {
+		StudentsService.deleteStudent(id).then(
+			this.setState({
+				students: this.state.students.filter(
+					(student) => student.id !== id
+				)
+			})
+		);
+	};
+
 	componentDidMount() {
 		StudentsService.getStudents().then((res) =>
 			this.setState({ students: res })
@@ -135,21 +145,18 @@ class StudentPage extends Component {
 
 		return (
 			<section>
+				<h2>Student List</h2>
 				{this.state.students.map((students, index) => (
 					<StudentsList
 						name={students.name}
 						grade={students.grade}
 						id={students.id}
 						key={index}
-						click={() =>
-							this.grabStudentsAccoms(students.id)
+						click={() => this.grabStudentsAccoms(students.id)}
+						delete={() =>
+							this.removeStudent(students.id)
 						}></StudentsList>
-				))}
-
-				<Accomodations
-					accoms={this.state.oneStudentAccom}
-					active={activeIndex === 0}></Accomodations>
-
+				))}{' '}
 				{this.state.toggleStudentForm ? (
 					studentform
 				) : (
@@ -157,6 +164,10 @@ class StudentPage extends Component {
 						Add New Student
 					</button>
 				)}
+				<h2>Accomodation</h2>
+				<Accomodations
+					accoms={this.state.oneStudentAccom}
+					active={activeIndex === 0}></Accomodations>
 				{this.state.toggleAccomodationForm ? (
 					accomform
 				) : (

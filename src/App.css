@@ -12,19 +12,29 @@
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
+  height: 26px;
+  margin-top: 10px;
 }
 
 .nav-bar li {
   border: solid 1px black;
   min-width: 34%;
+  min-height: 30px;
+  font-size: 18px;
 }
 
 .student-list {
   margin: 3px;
   padding: 3px;
+  text-align: -webkit-center;
+}
+
+.student-list .card {
+  min-width: 50%;
 }
 
 .accomodations {
@@ -32,5 +42,9 @@
 }
 
 .accomodations .card {
-  min-width: 600px;
+  min-width: 50%;
+}
+
+.accomodations .card .content {
+  border: solid 1px blue;
 }

@@ -13,6 +13,7 @@ const StudentsList = (props) => (
 			description={props.grade}
 			onClick={props.click}
 		/>
+		<button onClick={props.delete}>Delete {props.name}</button>
 	</section>
 );
 
