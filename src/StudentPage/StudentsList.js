@@ -1,22 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Card } from 'semantic-ui-react';
 
-function StudentsList(props) {
-	return (
-		<section>
-			<ul>
-				{props.students.map((students, index) => (
-					<section>
-						{' '}
-						<li>
-							Name:{students.name} Grade:{students.grade}
-						</li>
-						<li></li>
-					</section>
-				))}
-			</ul>
-		</section>
-	);
-}
+const StudentsList = (props) => (
+	<section className='student-list'>
+		<Card
+			className='accom-card'
+			as={Link}
+			to={`/student/${props.id}`}
+			header={props.name}
+			meta='Student'
+			description={props.grade}
+			onClick={props.click}
+		/>
+	</section>
+);
 
 export default StudentsList;

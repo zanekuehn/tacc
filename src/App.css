@@ -2,6 +2,8 @@
   text-align: center;
 }
 
+.student-list {}
+
 .student-page-container {
   width: 100%;
 }
@@ -21,19 +23,14 @@
 }
 
 .student-list {
-  list-style-type: none;
-  min-width: 40%;
-  max-width: 45%;
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
+  margin: 3px;
+  padding: 3px;
 }
 
-.accom-section {
-  display: flex;
-  flex-direction: column;
-  list-style-type: none;
-  min-width: 45%;
-  max-width: 45%;
-  border: 1px solid black;
+.accomodations {
+  text-align: -webkit-center;
+}
+
+.accomodations .card {
+  min-width: 600px;
 }

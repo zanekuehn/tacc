@@ -18,8 +18,6 @@ class StudentPage extends Component {
 				id: 2
 			}
 		],
-		params: this.props.match.params.id,
-
 		accomodations: [
 			{
 				name: 'help',
@@ -35,18 +33,7 @@ class StudentPage extends Component {
 		],
 		oneStudentAccom: [],
 		toggleStudentForm: false,
-		toggleAccomodationForm: false,
-		activeIndex: 0
-	};
-
-	handleClick = (e, titleProps) => {
-		const { index, id } = titleProps;
-		const { activeIndex } = this.state;
-		const newIndex = activeIndex === index ? -1 : index;
-
-		this.grabStudentsAccoms(id);
-
-		this.setState({ activeIndex: newIndex });
+		toggleAccomodationForm: false
 	};
 
 	toggleNewStudent = () => {
@@ -90,7 +77,7 @@ class StudentPage extends Component {
 		StudentsService.addAccomodation(
 			accomName.value,
 			description.value,
-			this.state.params
+			this.props.match.params.id
 		)
 			.then((res) => {
 				this.setState({
@@ -145,38 +132,23 @@ class StudentPage extends Component {
 				<button type='submit'>Submit</button>
 			</form>
 		);
+
 		return (
-			<Accordion className='student-page-container'>
-				{this.state.students.map((student, index) => (
-					<Accordion.Title
-						active={activeIndex === 0}
-						index={0}
-						id={student.id}
-						onClick={this.handleClick}>
-						<Icon name='dropdown' />
-						Name:{student.name} Grade:{student.grade}
-					</Accordion.Title>
-				))}
-
-				{this.state.oneStudentAccom.map((accom, index) => (
-					<Accordion.Content active={activeIndex === 0}>
-						<p>{accom.accomdation}</p>
-						<p>accom.description</p>
-					</Accordion.Content>
-				))}
-
-				{/* <StudentsList
-					grabAccoms={this.grabStudentsAccoms}
-					students={this.state.students}
-				/> */}
-
-				{/* {this.state.oneStudentAccom.map((accom, index) => (
-					<Accomodations
-						name={accom.accomdation}
-						description={accom.description}
+			<section>
+				{this.state.students.map((students, index) => (
+					<StudentsList
+						name={students.name}
+						grade={students.grade}
+						id={students.id}
 						key={index}
-					/>
-				))} */}
+						click={() =>
+							this.grabStudentsAccoms(students.id)
+						}></StudentsList>
+				))}
+
+				<Accomodations
+					accoms={this.state.oneStudentAccom}
+					active={activeIndex === 0}></Accomodations>
 
 				{this.state.toggleStudentForm ? (
 					studentform
@@ -192,7 +164,7 @@ class StudentPage extends Component {
 						Add Accomodation
 					</button>
 				)}
-			</Accordion>
+			</section>
 		);
 	}
 }
