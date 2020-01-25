@@ -51,23 +51,29 @@ class StudentPage extends Component {
 	};
 
 	submitNewStudent = (e) => {
-		console.log('I ran!');
 		e.preventDefault();
 		const { name, grade } = e.target;
-		console.log(name.value, grade.value);
 
 		StudentsService.addNewStudent(name.value, grade.value).then((res) => {
+			console.log(res.id);
 			name.value = '';
 			grade.value = '';
+			this.setState({
+				toggleStudentForm: false,
+				students: [
+					...this.state.students,
+					{ name: res.name, grade: res.grade, id: res.id }
+				]
+			});
 		});
 
-		this.setState({
-			toggleStudentForm: false,
-			students: [
-				...this.state.students,
-				{ name: name.value, grade: grade.value }
-			]
-		});
+		// this.setState({
+		// 	toggleStudentForm: false,
+		// 	students: [
+		// 		...this.state.students,
+		// 		{ name: name.value, grade: grade.value,id:res.id }
+		// 	]
+		// });
 	};
 
 	submitNewAccom = (e) => {
@@ -114,6 +120,15 @@ class StudentPage extends Component {
 			})
 		);
 	};
+
+	// componentDidUpdate() {
+	// 	StudentsService.getStudents().then((res) => {
+	// 		if (this.state.students !== res) {
+	// 			console.log(this.state.students);
+	// 			this.setState({ students: res });
+	// 		}
+	// 	});
+	// }
 
 	componentDidMount() {
 		StudentsService.getStudents().then((res) =>
