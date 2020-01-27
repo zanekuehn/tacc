@@ -9,7 +9,9 @@ function Nav() {
 			</li>
 
 			<li>Class</li>
-			<li>Journal</li>
+			<Link to='/journal/1'>
+				<li>Journal</li>
+			</Link>
 		</nav>
 	);
 }

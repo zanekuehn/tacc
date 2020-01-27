@@ -7,7 +7,7 @@ const StudentsService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
-	addNewStudent(name, grade) {
+	addNewStudent(name, grade, classroom) {
 		return fetch(`${config.API_ENDPOINT}students`, {
 			method: 'POST',
 			headers: {
@@ -15,7 +15,8 @@ const StudentsService = {
 			},
 			body: JSON.stringify({
 				name,
-				grade
+				grade,
+				classroom
 			})
 		}).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
@@ -28,11 +29,16 @@ const StudentsService = {
 			headers: { 'content-type': 'application/json' }
 		});
 	},
-	addAccomodation(accomdation, description, id) {
+	addAccomodation(accomdation, description, currentday, fulfilled, id) {
 		return fetch(`${config.API_ENDPOINT}students/${id}`, {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ accomdation, description })
+			body: JSON.stringify({
+				accomdation,
+				description,
+				currentday,
+				fulfilled
+			})
 		}).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
@@ -41,6 +47,11 @@ const StudentsService = {
 		return fetch(`${config.API_ENDPOINT}students/${id}`).then((res) =>
 			res.json()
 		);
+	},
+	getSingleStudent(id) {
+		return fetch(
+			`${config.API_ENDPOINT}students/student/${id}`
+		).then((res) => res.json());
 	}
 };
 

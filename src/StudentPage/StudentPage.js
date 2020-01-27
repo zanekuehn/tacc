@@ -6,18 +6,8 @@ import { Accordion, Icon } from 'semantic-ui-react';
 
 class StudentPage extends Component {
 	state = {
-		students: [
-			{
-				name: 'joe',
-				grade: '12',
-				id: 1
-			},
-			{
-				name: 'z',
-				grade: '11',
-				id: 2
-			}
-		],
+		today: '',
+		students: [],
 		accomodations: [
 			{
 				name: 'help',
@@ -52,9 +42,13 @@ class StudentPage extends Component {
 
 	submitNewStudent = (e) => {
 		e.preventDefault();
-		const { name, grade } = e.target;
+		const { name, grade, classroom } = e.target;
 
-		StudentsService.addNewStudent(name.value, grade.value).then((res) => {
+		StudentsService.addNewStudent(
+			name.value,
+			grade.value,
+			classroom.value
+		).then((res) => {
 			console.log(res.id);
 			name.value = '';
 			grade.value = '';
@@ -62,7 +56,12 @@ class StudentPage extends Component {
 				toggleStudentForm: false,
 				students: [
 					...this.state.students,
-					{ name: res.name, grade: res.grade, id: res.id }
+					{
+						name: res.name,
+						grade: res.grade,
+						id: res.id,
+						classroom: res.classroom
+					}
 				]
 			});
 		});
@@ -76,14 +75,16 @@ class StudentPage extends Component {
 		// });
 	};
 
-	submitNewAccom = (e) => {
+	submitNewAccom = (e, id) => {
 		e.preventDefault();
-		const { accomName, description } = e.target;
+		const { accomName, description, date, fulfilled } = e.target;
 
 		StudentsService.addAccomodation(
 			accomName.value,
 			description.value,
-			this.props.match.params.id
+			date.value,
+			fulfilled.value,
+			id
 		)
 			.then((res) => {
 				this.setState({
@@ -134,6 +135,7 @@ class StudentPage extends Component {
 		StudentsService.getStudents().then((res) =>
 			this.setState({ students: res })
 		);
+		this.setState({ today: new Date().toISOString().substr(0, 10) });
 	}
 
 	render() {
@@ -144,19 +146,37 @@ class StudentPage extends Component {
 				<label>Student Name:</label>
 				<input type='text' name='name' required></input>
 				<label>Student Grade:</label>
-				<input type='text' name='grade' required></input>
+				<input
+					type='number'
+					name='grade'
+					defaultValue='9'
+					min='9'
+					max='12'
+					required></input>
+				<label>Class Name:</label>
+				<input type='text' name='classroom' required></input>
 				<button type='submit'>Submit</button>
 			</form>
 		);
-		const accomform = (
-			<form onSubmit={this.submitNewAccom}>
-				<label>Accommodation Name:</label>
-				<input type='text' name='accomName' required></input>
-				<label>Describe Accomodation:</label>
-				<input type='text' name='description' required></input>
-				<button type='submit'>Submit</button>
-			</form>
-		);
+		// const accomform = (
+		// 	<form onSubmit={(e) => this.submitNewAccom}>
+		// 		<label>Date:</label>
+		// 		<input
+		// 			type='date'
+		// 			name='date'
+		// 			defaultValue={this.state.today}></input>
+		// 		<label>Accommodation Name:</label>
+		// 		<input type='text' name='accomName' required></input>
+		// 		<label>Describe Accomodation:</label>
+		// 		<input type='text' name='description' required></input>
+		// 		<label>Fulfilled?</label>
+		// 		<select name='fulfilled'>
+		// 			<option value='Yes'>Yes</option>
+		// 			<option value='No'>No</option>
+		// 		</select>
+		// 		<button type='submit'>Submit</button>
+		// 	</form>
+		// );
 
 		return (
 			<section>
@@ -165,12 +185,17 @@ class StudentPage extends Component {
 					<StudentsList
 						name={students.name}
 						grade={students.grade}
+						classroom={students.classroom}
 						id={students.id}
 						key={index}
-						click={() => this.grabStudentsAccoms(students.id)}
-						delete={() =>
-							this.removeStudent(students.id)
-						}></StudentsList>
+						delete={() => this.removeStudent(students.id)}
+						submitNewAccom={(e) =>
+							this.submitNewAccom(e, students.id)
+						}
+						accomForm={this.state.toggleAccomodationForm}
+						toggleAccomForm={this.toggleNewAccomodation}
+						today={this.state.today}
+						paramsID={this.props.match.params.id}></StudentsList>
 				))}{' '}
 				{this.state.toggleStudentForm ? (
 					studentform
@@ -183,13 +208,6 @@ class StudentPage extends Component {
 				<Accomodations
 					accoms={this.state.oneStudentAccom}
 					active={activeIndex === 0}></Accomodations>
-				{this.state.toggleAccomodationForm ? (
-					accomform
-				) : (
-					<button onClick={this.toggleNewAccomodation}>
-						Add Accomodation
-					</button>
-				)}
 			</section>
 		);
 	}
