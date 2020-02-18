@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'semantic-ui-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserTimes } from '@fortawesome/free-solid-svg-icons';
 
 class StudentsList extends React.Component {
 	state = {};
+
+	delete = (<FontAwesomeIcon icon={faUserTimes} />);
 	render() {
 		return (
 			<section className='student-list'>
@@ -16,8 +20,8 @@ class StudentsList extends React.Component {
 					description={`Grade:${this.props.grade}`}
 					onClick={this.props.click}
 				/>
-				<button onClick={this.props.delete}>
-					Delete {this.props.name}
+				<button className='delete' onClick={this.props.delete}>
+					{this.delete} {this.props.name}
 				</button>
 				<Link to={`/journal/${this.props.id}`}>
 					<button>Journal</button>

@@ -109,7 +109,9 @@ class StudentPage extends Component {
 				{this.state.toggleStudentForm ? (
 					studentform
 				) : (
-					<button onClick={this.toggleNewStudent}>
+					<button
+						onClick={this.toggleNewStudent}
+						className='addStudent'>
 						Add New Student
 					</button>
 				)}

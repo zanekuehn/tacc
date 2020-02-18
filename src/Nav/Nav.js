@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default class MenuExampleBasic extends React.Component {
 	state = {};

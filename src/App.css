@@ -2,8 +2,6 @@
   text-align: center;
 }
 
-.student-list {}
-
 .student-page-container {
   width: 100%;
 }
@@ -66,4 +64,27 @@
 
 .active {
   color: white;
+}
+
+button {
+  min-height: 30px;
+  min-width: 30px;
+  border-radius: 3px;
+  border: 1px solid white;
+  box-shadow: 3px 5px slategray;
+  margin: 6px;
+  background-color: #185632;
+  color: white
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.delete {
+  background-color: red;
+}
+
+.addStudent {
+  margin-top: 30px;
 }
