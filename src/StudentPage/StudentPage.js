@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import StudentsList from './StudentsList';
-import Accomodations from './Accomodations';
+
 import StudentsService from '../Services/students-service';
-import { Accordion, Icon } from 'semantic-ui-react';
 
 class StudentPage extends Component {
 	state = {
@@ -22,21 +21,12 @@ class StudentPage extends Component {
 			{ name: 'stuffs', description: 'needs help', studentId: 2 }
 		],
 		oneStudentAccom: [],
-		toggleStudentForm: false,
-		toggleAccomodationForm: false
+		toggleStudentForm: false
 	};
 
 	toggleNewStudent = () => {
 		this.setState({
-			toggleStudentForm: true,
-			toggleAccomodationForm: false
-		});
-	};
-
-	toggleNewAccomodation = () => {
-		this.setState({
-			toggleAccomodationForm: true,
-			toggleStudentForm: false
+			toggleStudentForm: true
 		});
 	};
 
@@ -65,51 +55,6 @@ class StudentPage extends Component {
 				]
 			});
 		});
-
-		// this.setState({
-		// 	toggleStudentForm: false,
-		// 	students: [
-		// 		...this.state.students,
-		// 		{ name: name.value, grade: grade.value,id:res.id }
-		// 	]
-		// });
-	};
-
-	submitNewAccom = (e, id) => {
-		e.preventDefault();
-		const { accomName, description, date, fulfilled } = e.target;
-
-		StudentsService.addAccomodation(
-			accomName.value,
-			description.value,
-			date.value,
-			fulfilled.value,
-			id
-		)
-			.then((res) => {
-				this.setState({
-					accomodations: [
-						...this.state.accomodations,
-						{
-							accomdation: accomName.value,
-							description: description.value
-						}
-					]
-				});
-			})
-			.then(() => {
-				accomName.value = '';
-				description.value = '';
-			});
-	};
-
-	grabStudentsAccoms = (id) => {
-		console.log('ran');
-		StudentsService.getAccomodations(id).then((res) => {
-			this.setState({
-				oneStudentAccom: res
-			});
-		});
 	};
 
 	removeStudent = (id) => {
@@ -122,25 +67,13 @@ class StudentPage extends Component {
 		);
 	};
 
-	// componentDidUpdate() {
-	// 	StudentsService.getStudents().then((res) => {
-	// 		if (this.state.students !== res) {
-	// 			console.log(this.state.students);
-	// 			this.setState({ students: res });
-	// 		}
-	// 	});
-	// }
-
 	componentDidMount() {
 		StudentsService.getStudents().then((res) =>
 			this.setState({ students: res })
 		);
-		this.setState({ today: new Date().toISOString().substr(0, 10) });
 	}
 
 	render() {
-		const { activeIndex } = this.state;
-
 		const studentform = (
 			<form onSubmit={this.submitNewStudent}>
 				<label>Student Name:</label>
@@ -158,25 +91,6 @@ class StudentPage extends Component {
 				<button type='submit'>Submit</button>
 			</form>
 		);
-		// const accomform = (
-		// 	<form onSubmit={(e) => this.submitNewAccom}>
-		// 		<label>Date:</label>
-		// 		<input
-		// 			type='date'
-		// 			name='date'
-		// 			defaultValue={this.state.today}></input>
-		// 		<label>Accommodation Name:</label>
-		// 		<input type='text' name='accomName' required></input>
-		// 		<label>Describe Accomodation:</label>
-		// 		<input type='text' name='description' required></input>
-		// 		<label>Fulfilled?</label>
-		// 		<select name='fulfilled'>
-		// 			<option value='Yes'>Yes</option>
-		// 			<option value='No'>No</option>
-		// 		</select>
-		// 		<button type='submit'>Submit</button>
-		// 	</form>
-		// );
 
 		return (
 			<section>
@@ -189,11 +103,6 @@ class StudentPage extends Component {
 						id={students.id}
 						key={index}
 						delete={() => this.removeStudent(students.id)}
-						submitNewAccom={(e) =>
-							this.submitNewAccom(e, students.id)
-						}
-						accomForm={this.state.toggleAccomodationForm}
-						toggleAccomForm={this.toggleNewAccomodation}
 						today={this.state.today}
 						paramsID={this.props.match.params.id}></StudentsList>
 				))}{' '}
@@ -204,10 +113,6 @@ class StudentPage extends Component {
 						Add New Student
 					</button>
 				)}
-				<h2>Accomodation</h2>
-				<Accomodations
-					accoms={this.state.oneStudentAccom}
-					active={activeIndex === 0}></Accomodations>
 			</section>
 		);
 	}

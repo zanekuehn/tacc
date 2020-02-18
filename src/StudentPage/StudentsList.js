@@ -5,25 +5,6 @@ import { Card } from 'semantic-ui-react';
 class StudentsList extends React.Component {
 	state = {};
 	render() {
-		const accomform = (
-			<form onSubmit={this.props.submitNewAccom}>
-				<label>Date:</label>
-				<input
-					type='date'
-					name='date'
-					defaultValue={this.props.today}></input>
-				<label>Accommodation Name:</label>
-				<input type='text' name='accomName' required></input>
-				<label>Describe Accomodation:</label>
-				<input type='text' name='description' required></input>
-				<label>Fulfilled?</label>
-				<select name='fulfilled'>
-					<option value='Yes'>Yes</option>
-					<option value='No'>No</option>
-				</select>
-				<button type='submit'>Submit</button>
-			</form>
-		);
 		return (
 			<section className='student-list'>
 				<Card
@@ -41,13 +22,6 @@ class StudentsList extends React.Component {
 				<Link to={`/journal/${this.props.id}`}>
 					<button>Journal</button>
 				</Link>
-				{this.props.accomForm ? (
-					accomform
-				) : (
-					<button onClick={this.props.toggleAccomForm}>
-						Add Accomodation
-					</button>
-				)}
 			</section>
 		);
 	}

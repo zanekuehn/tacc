@@ -48,3 +48,7 @@
 .accomodations .card .content {
   border: solid 1px blue;
 }
+
+.items {
+  width: 50%;
+}

@@ -1,39 +1,50 @@
 {
-  "name": "tacc",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@stardust-ui/docs-components": "^0.40.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^7.2.1",
-    "moment": "^2.24.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "tacc",
+	"version": "0.1.0",
+	"main": "public/electron.js",
+	"private": true,
+	"dependencies": {
+		"@stardust-ui/docs-components": "^0.40.0",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.4.0",
+		"@testing-library/user-event": "^7.2.1",
+		"cross-env": "^7.0.0",
+		"electron-is-dev": "^1.1.0",
+		"moment": "^2.24.0",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "3.3.0",
+		"semantic-ui-css": "^2.4.1",
+		"semantic-ui-react": "^0.88.2"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"react-build": "react-scripts build",
+		"react-test": "react-scripts test",
+		"react-eject": "react-scripts eject",
+		"electron-build": "electron-builder",
+		"build": "npm run react-build && npm run electron-build"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"concurrently": "^5.1.0",
+		"electron": "^7.1.10",
+		"electron-builder": "^22.3.2",
+		"wait-on": "^4.0.0"
+	}
 }

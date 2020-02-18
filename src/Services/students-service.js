@@ -48,10 +48,20 @@ const StudentsService = {
 			res.json()
 		);
 	},
+	getAllAccomodations(id) {
+		return fetch(`${config.API_ENDPOINT}students/all/${id}`).then((res) =>
+			res.json()
+		);
+	},
 	getSingleStudent(id) {
 		return fetch(
 			`${config.API_ENDPOINT}students/student/${id}`
 		).then((res) => res.json());
+	},
+	fillForm(id) {
+		return fetch(`${config.API_ENDPOINT}students/form/${id}`).then((res) =>
+			res.json()
+		);
 	}
 };
 
