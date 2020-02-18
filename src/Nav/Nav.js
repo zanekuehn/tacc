@@ -5,6 +5,12 @@ import { Menu } from 'semantic-ui-react';
 export default class MenuExampleBasic extends React.Component {
 	state = {};
 
+	style = {
+		color: 'white',
+		backgroundColor: '#185632',
+		border: '1px solid white'
+	};
+
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
 	render() {
@@ -12,24 +18,25 @@ export default class MenuExampleBasic extends React.Component {
 
 		return (
 			<Menu>
-				<Link className='items' to='/student/1'>
-					<Menu.Item
-						name='editorials'
-						active={activeItem === 'editorials'}
-						onClick={this.handleItemClick}
-						link={false}>
-						<Link to='/student/1'>Students</Link>
-					</Menu.Item>
-				</Link>
-				<Link to='/journal/1' className='items'>
-					<Menu.Item
-						name='reviews'
-						active={activeItem === 'reviews'}
-						onClick={this.handleItemClick}
-						link={false}>
-						<Link to='/journal/1'>Accomodations</Link>
-					</Menu.Item>
-				</Link>
+				<Menu.Item
+					className='items'
+					as={Link}
+					to='/student/1'
+					name='Students'
+					active={activeItem === 'Students'}
+					onClick={this.handleItemClick}
+					link={false}
+					style={this.style}></Menu.Item>
+
+				<Menu.Item
+					as={Link}
+					to='/journal/1'
+					className='items'
+					name='Accomodations'
+					active={activeItem === 'Accomodations'}
+					onClick={this.handleItemClick}
+					link={false}
+					style={this.style}></Menu.Item>
 			</Menu>
 		);
 	}

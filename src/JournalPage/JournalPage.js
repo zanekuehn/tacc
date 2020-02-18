@@ -148,7 +148,7 @@ class JournalPage extends React.Component {
 					onClick={() =>
 						this.grabAllAccoms(this.props.match.params.id)
 					}>
-					View All Accomodations
+					View Accom History
 				</button>
 			</section>
 		);

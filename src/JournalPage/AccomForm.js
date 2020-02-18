@@ -37,6 +37,7 @@ export default function AccomForm(props) {
 							<input
 								type='text'
 								name='accomName'
+								placeholder='Enter the name of the Accom'
 								defaultValue={field.accomdation}
 								required></input>
 							<label>Describe Accomodation:</label>
@@ -44,6 +45,7 @@ export default function AccomForm(props) {
 								type='text'
 								name='description'
 								defaultValue={field.description}
+								placeholder='Enter Accom Description'
 								required></input>
 							<label>Fulfilled?</label>
 							<select name='fulfilled'>

@@ -51,4 +51,19 @@
 
 .items {
   width: 50%;
+  background-color: #185632;
+  color: white;
+}
+
+.item:hover {
+  color: white;
+}
+
+.item {
+  color: white;
+  font-size: 18px;
+}
+
+.active {
+  color: white;
 }
